@@ -85,7 +85,7 @@ namespace Akerue.PuzzleTest.Behaviours{
 		public void Drop(){
 			_targetHeight = 0;
 			float distance = Vector3.Distance(_piecePosition, transform.localPosition);
-			if(distance<20){
+			if(distance<PuzzleSceneSmanager.puzzlePinDistance){
 				transform.localPosition = _piecePosition;
 				_settedOnGoodPlace = true;
 				if(checkSuccess()){
@@ -113,10 +113,10 @@ namespace Akerue.PuzzleTest.Behaviours{
 
 		void updateHeight(){
 			if(_targetHeight < _height){
-				_height -= Time.deltaTime*5;
+				_height -= Time.deltaTime*PuzzleSceneSmanager.shadowSpeed;
 				if(_targetHeight > _height)_height = _targetHeight;
 			}else if(_targetHeight > _height){
-				_height += Time.deltaTime*5;
+				_height += Time.deltaTime*PuzzleSceneSmanager.shadowSpeed;
 				if(_targetHeight < _height)_height = _targetHeight;
 			}
 		}
@@ -124,7 +124,7 @@ namespace Akerue.PuzzleTest.Behaviours{
 		void updateShadow(){
 			setShadowPosition();
 			if(_height > 0){
-				setShadowAlpha(0.5f);
+				setShadowAlpha(PuzzleSceneSmanager.shadowAlpha);
 			}else{
 				setShadowAlpha(0f);
 			}
@@ -137,7 +137,7 @@ namespace Akerue.PuzzleTest.Behaviours{
 		}
 
 		void setShadowPosition(){
-			Vector3 shadowDirection = new Vector3(10f, -5f, 0);
+			Vector3 shadowDirection = PuzzleSceneSmanager.shadowPos;
 			Vector3 pos = transform.localPosition + shadowDirection * _height;
 			_shadow.transform.localPosition = pos;
 			_shadow.transform.SetSiblingIndex(transform.GetSiblingIndex()-1);
